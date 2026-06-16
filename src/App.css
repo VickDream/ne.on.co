@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@900&display=swap');
+
 * {
     padding: 0;
     margin: 0;
@@ -5,6 +7,6 @@
 }
 
 html, body {
-  width: 100%;
+width: 100%;
   min-height: 100vh;
 }

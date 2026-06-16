@@ -12,6 +12,8 @@
   /* Fuentes estilo Arcade, Terminal y Flyer Industrial */
   --font-industrial: 'Impact', 'Arial Black', sans-serif;
   --font-retro-mono: 'Courier New', Courier, monospace;
+  --font-neon-orbitron: 'Orbitron', sans-serif;
+  --font-neon-anton: 'Anton', sans-serif;
 }
 
 body {
@@ -85,7 +87,7 @@ body {
 }
 
 .main-title {
-  font-family: var(--font-industrial);
+  font-family: var(--font-neon-orbitron);
   font-size: clamp(4.5rem, 12vw, 8.5rem);
   font-weight: 900;
   line-height: 0.85;
@@ -97,6 +99,7 @@ body {
 }
 
 .gradient-text {
+  font-family: var(--font-neon-orbitron);
   /* 1. Forzamos el bloque para evitar problemas de flujo */
   display: inline-block;
   position: relative;
@@ -141,7 +144,7 @@ body {
 
 /* Bloque de fecha agresivo */
 .date-block {
-  font-family: var(--font-industrial);
+  font-family: var(--font-neon-anton);
   font-size: clamp(1.8rem, 5vw, 3.5rem);
   background-color: var(--red-intense); /* Rojo fuego del flyer */
   color: #ffffff;

@@ -130,7 +130,8 @@ export default function NeonEvent() {
         <div className="cta-wrapper">
         </div>
           <footer className="neon-footer">
-          © 2026 NE.ON.CO.
+          © 2026 NE.ON.CO. By
+          <a href="https://portafolio-cbr.pages.dev/" target="_blank">vickmetadeth</a>.
           </footer>
         </main>
       </>

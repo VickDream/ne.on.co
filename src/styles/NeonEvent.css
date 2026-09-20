@@ -410,3 +410,53 @@ body {
   box-shadow: 0 0 40px var(--neon-green), 0 0 80px var(--neon-green);
   transform: scale(1.05);
 }
+
+/* ==========================================================================
+   ESTILO PARA EL ENLACE DEL PORTAFOLIO (Footer)
+   ========================================================================== */
+
+.neon-footer a {
+  color: var(--cyan-electric); /* Color cian eléctrico para contrastar con el fondo */
+  text-decoration: none; /* Quitamos el subrayado por defecto */
+  font-family: var(--font-retro-mono); /* Fuente de terminal */
+  font-weight: bold;
+  position: relative; /* Necesario para el efecto del subrayado */
+  padding: 0 4px; /* Un poco de aire a los lados */
+  transition: all 0.3s ease;
+  
+  /* Animación sutil de parpadeo estilo terminal antigua */
+  animation: terminalBlink 3s infinite steps(1, start);
+}
+
+/* El subrayado animado */
+.neon-footer a::after {
+  content: '';
+  position: absolute;
+  width: 0; /* Empieza invisible */
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background: linear-gradient(90deg, var(--cyan-electric), var(--neon-pink));
+  transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 0 8px var(--cyan-electric);
+}
+
+/* Efecto al pasar el mouse (Hover) */
+.neon-footer a:hover {
+  color: #ffffff; /* Se vuelve blanco puro */
+  text-shadow: 0 0 10px var(--cyan-electric), 0 0 20px var(--cyan-electric); /* Brillo intenso */
+  animation: none; /* Detenemos el parpadeo para que se vea sólido y llamativo */
+}
+
+/* El subrayado se expande al 100% en hover */
+.neon-footer a:hover::after {
+  width: 100%;
+}
+
+/* Animación de parpadeo sutil (como si la pantalla tuviera una interferencia) */
+@keyframes terminalBlink {
+  0%, 90%, 100% { opacity: 1; }
+  92% { opacity: 0.4; }
+  94% { opacity: 1; }
+  96% { opacity: 0.6; }
+}

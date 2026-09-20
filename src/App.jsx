@@ -1,6 +1,6 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import NeonEvent from './pages/NeonEvent'
+import NeonEvent from './components/NeonEvent'
 
 function App() {
   return (

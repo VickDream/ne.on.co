@@ -5,9 +5,21 @@ import '../styles/NeonEvent.css';
 export default function NeonEvent() {
     // Estado para el contador
     const [timeLeft, setTimeLeft] = useState("SOLO FALTAN 00 DIAS 00:00:00");
-    
-    // ¡NUEVO! Estado para saber si ya empezó la fiesta
+
+    // Estado para saber si ya empezó la fiesta
     const [isPartyTime, setIsPartyTime] = useState(false);
+
+    // --- NUEVO: ARRAY DE ENLACES A FOTOS ---
+    // Aquí puedes añadir todos los números o cuentas que quieras.
+    // Solo copia y pega un nuevo objeto { id, nombre, url } y cambia los datos.
+    const photoLinks = [
+        { id: 1, nombre: "Álbum 1", url: "https://www.instagram.com/ne.on.co/p/Ddxl8VoDcBG/" },
+        { id: 2, nombre: "Álbum 2", url: "#" },
+        { id: 3, nombre: "Álbum 3", url: "#" },
+        { id: 4, nombre: "Álbum 4", url: "#" },
+        { id: 5, nombre: "Álbum 5", url: "#" },
+        // Añade más aquí si lo necesitas...
+    ];
 
     useEffect(() => {
         // --- CONFIGURACIÓN DE FECHAS ---
@@ -24,12 +36,12 @@ export default function NeonEvent() {
             if (now >= startDate && now < endDate) {
                 setIsPartyTime(true);
                 setTimeLeft("¡LA FIESTA YA COMENZÓ!");
-            } 
+            }
             // Si ya pasaron las 2 AM del día 25
             else if (now >= endDate) {
                 setIsPartyTime(true);
                 setTimeLeft("EL EVENTO HA TERMINADO");
-            } 
+            }
             // Si aún falta para el evento
             else {
                 setIsPartyTime(false);
@@ -37,7 +49,7 @@ export default function NeonEvent() {
                 const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-                
+
                 const dStr = String(days).padStart(2, '0');
                 const hStr = String(hours).padStart(2, '0');
                 const mStr = String(minutes).padStart(2, '0');
@@ -53,87 +65,105 @@ export default function NeonEvent() {
         return () => clearInterval(interval);
     }, []);
 
-    // --- RENDERIZADO CONDICIONAL ---
-    // Si es hora de la fiesta, mostramos la pantalla colorida de agradecimiento
+    // --- RENDERIZADO CONDICIONAL: MODO FIESTA ---
     if (isPartyTime) {
         return (
             <div className="party-mode-container">
                 <div className="party-content">
-                    <h1 className="party-title">¡FIESTA A BORDO!</h1>
-                    <p className="party-subtitle">La noche es nuestra. Estamos en vivo.</p>
+                    <h1 className="party-title">¡GRACIAS, TOLUCA!</h1>
+                    <p className="party-subtitle">La noche fue nuestra.</p>
+
                     <div className="party-info">
-                        <p>🔴 Transmisión en vivo desde las 18:00 HRS</p>
-                        <p>🎧 Maximum Hardcore & Hard Techno Sessions</p>
-                        <p>📍 Amnesia Toluca</p>
+                        <p><strong>🎧 GRACIAS A TODOS LOS ASISTENTES</strong></p>
+                        <p>🎁🎉 Por regalarnos una noche llena de Hardcore y Hard Techno.</p>
+                        <p>✨ Fue una experiencia increíble. ¡Esperamos que la hayan disfrutado tanto como nosotros!</p>
+                        <p>💖 Gracias por ser parte de NEON PARTY.</p>
                     </div>
+
                     <div className="party-thanks">
-                        <p>Gracias por ser parte de NEON PARTY.</p>
-                        <p>¡Disfruta el show!</p>
+                        <p>Esperen con ansias la próxima edición...</p>
                     </div>
-                    <NavLink to="https://ig.me/m/ne.on.co" target="_blank" rel="noopener noreferrer" className="party-btn">
-                        VER TRANSMISIÓN
-                    </NavLink>
+
+                    {/* --- SECCIÓN DE GALERÍA DE FOTOS --- */}
+                    <div className="photo-gallery-section">
+                        <p className="party-teaser">📸 REVIVE LOS MEJORES MOMENTOS 📸</p>
+
+                        <div className="photo-links-grid">
+                            {photoLinks.map((link) => (
+                                <a
+                                    key={link.id}
+                                    href={link.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="photo-link-btn"
+                                >
+                                    {link.nombre}
+                                </a>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         );
     }
 
-    // Si no es hora de la fiesta, mostramos la landing page normal (tu código original)
+    // --- RENDERIZADO: LANDING PAGE NORMAL ---
     return (
         <>
-        {/* Header */}
-        <header className="neon-header">
-         <div className="brand-badge">BY NEON</div>
-         <NavLink to="https://ig.me/m/ne.on.co"
-                  className="btn-secondary"
-                  target='_blank'
-                  rel='noopener noreferrer'
-          >
-            RESERVAR
-          </NavLink>
-         </header>
+            {/* Header */}
+            <header className="neon-header">
+                <div className="brand-badge">BY NEON</div>
+                <NavLink to="https://ig.me/m/ne.on.co"
+                    className="btn-secondary"
+                    target='_blank'
+                    rel='noopener noreferrer'
+                >
+                    RESERVAR
+                </NavLink>
+            </header>
 
-        {/* CONTENIDO PRINCIPAL */}
-        <main className="neon-main">
+            {/* CONTENIDO PRINCIPAL */}
+            <main className="neon-main">
 
-        <div className="genre-tag">
-         <span>2010s VIBES</span> · <span>ELECTRO</span> · <span>HARD TECHNO</span>
-        </div>
+                <div className="genre-tag">
+                    <span>2010s VIBES</span> · <span>ELECTRO</span> · <span>HARD TECHNO</span>
+                </div>
 
-        <h1 className="main-title">
-         NEON <br />
-         <span className="gradient-text">PARTY</span>
-        </h1>
+                <h1 className="main-title">
+                    NEON <br />
+                    <span className="gradient-text">PARTY</span>
+                </h1>
 
-         <div className="date-block">
-         JUEVES 24.09.26
-        </div>
+                <div className="date-block">
+                    JUEVES 24.09.26
+                </div>
 
-        {/* DETALLES DEL EVENTO */}
-        <section className="info-card">
-          <div className="card-rec-signal">
-          <span className='rec-dot'>●</span>
-          <span className='rec-title'>REC</span> {timeLeft}
-        </div>
+                {/* DETALLES DEL EVENTO */}
+                <section className="info-card">
+                    <div className="card-rec-signal">
+                        <span className='rec-dot'>●</span>
+                        <span className='rec-title'>REC</span> {timeLeft}
+                    </div>
 
-          <h2 className="location-title">📍 AMNESIA TOLUCA</h2>
-          <p className="location-address">C. Plutarco González, Barrio de la Merced</p>
+                    <h2 className="location-title">📍 AMNESIA TOLUCA</h2>
+                    <p className="location-address">C. Plutarco González, Barrio de la Merced</p>
 
-        <div className="details-log">
-          <p>⚡ ACCESS: 18:00 HRS</p>
-          <p>⚡ DRESSCODE: NEON / CYBER / INDUSTRIAL</p>
-          <p>⚡ LINEUP: MAXIMUM HARDCORE & HARD TECHNO SESSIONS</p>
-          <p>⚡ ACCESS FEE: $100 MXN</p>
-        </div>
-        </section>
+                    <div className="details-log">
+                        <p>⚡ ACCESS: 18:00 HRS</p>
+                        <p>⚡ DRESSCODE: NEON / CYBER / INDUSTRIAL</p>
+                        <p>⚡ LINEUP: MAXIMUM HARDCORE & HARD TECHNO SESSIONS</p>
+                        <p>⚡ ACCESS FEE: $100 MXN</p>
+                    </div>
+                </section>
 
-        <div className="cta-wrapper">
-        </div>
-          <footer className="neon-footer">
-          © 2026 NE.ON.CO. By
-          <a href="https://portafolio-cbr.pages.dev/" target="_blank">vickmetadeth</a>.
-          </footer>
-        </main>
-      </>
+                <div className="cta-wrapper">
+                </div>
+
+                <footer className="neon-footer">
+                    © 2026 NE.ON.CO. By
+                    <a href="https://portafolio-cbr.pages.dev/" target="_blank" rel="noopener noreferrer">vickmetadeth</a>.
+                </footer>
+            </main>
+        </>
     )
 }

@@ -8,7 +8,7 @@
   --neon-yellow: #fff700;
   --cyan-electric: #00f5ff;
   --red-intense: #ff0000;
-  
+
   --font-industrial: 'Impact', 'Arial Black', sans-serif;
   --font-retro-mono: 'Courier New', Courier, monospace;
   --font-neon-orbitron: 'Orbitron', sans-serif;
@@ -21,9 +21,7 @@ body {
   width: 100%;
   min-height: 100vh;
   background-color: var(--bg-dark);
-  
-  /* NUEVO: Fondo con rejilla sutil y luces neón */
-  background-image: 
+  background-image:
     linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     radial-gradient(circle at 0% 0%, rgba(255, 0, 127, 0.2) 0%, transparent 50%),
@@ -42,6 +40,7 @@ body {
   padding: 1.5rem 2rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -76,23 +75,21 @@ body {
 }
 
 .genre-tag {
-  /* Borde amarillo sólido estilo cinta de peligro */
   border: 2px solid var(--neon-yellow);
-  background-color: rgba(255, 247, 0, 0.05); /* Fondo amarillo muy tenue */
-  color: var(--neon-yellow); /* Texto amarillo */
+  background-color: rgba(255, 247, 0, 0.05);
+  color: var(--neon-yellow);
   padding: 6px 16px;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 3px;
-  border-radius: 4px; /* Un poco más cuadrado para el estilo industrial */
+  border-radius: 4px;
   margin-bottom: 2rem;
-  animation: pulseBlink 2s infinite alternate;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 0 10px rgba(255, 247, 0, 0.2); /* Brillo amarillo sutil */
-  backdrop-filter: blur(5px);
+  /* Animación simplificada: solo opacity */
+  animation: pulseOpacity 2s infinite alternate;
+  box-shadow: 0 0 10px rgba(255, 247, 0, 0.2);
+  /* Estático */
 }
 
-/* NUEVO EFECTO DE TÍTULO: Doble capa con sombra de color */
 .main-title {
   font-family: var(--font-neon-orbitron);
   font-size: clamp(4.5rem, 12vw, 8.5rem);
@@ -104,16 +101,10 @@ body {
   margin: 0;
   position: relative;
   z-index: 1;
-  text-shadow: 
+  /* Sombra estática (sin transición) */
+  text-shadow:
     4px 4px 0px var(--neon-pink),
     -2px -2px 0px var(--cyan-electric);
-  transition: all 0.3s ease;
-}
-
-.main-title:hover {
-  text-shadow: 
-    6px 6px 0px var(--neon-pink),
-    -4px -4px 0px var(--cyan-electric);
 }
 
 .gradient-text {
@@ -124,16 +115,23 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  /* Usamos drop-shadow estático, no animado, para el brillo base */
   filter: drop-shadow(0 0 15px rgba(0, 245, 255, 0.6));
-  animation: partyCleanGlow 2s ease-in-out infinite alternate;
+  /* La animación ahora usa opacity, mucho más eficiente */
+  animation: glowOpacity 2s ease-in-out infinite alternate;
+  will-change: opacity;
 }
 
-@keyframes partyCleanGlow {
-  0% { filter: drop-shadow(0 0 10px rgba(57, 255, 20, 0.5)); }
-  100% { filter: drop-shadow(0 0 25px rgba(0, 245, 255, 0.9)); }
+@keyframes glowOpacity {
+  0% {
+    opacity: 0.85;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
-/* NUEVO BLOQUE DE FECHA: Efecto etiqueta rasgada */
 .date-block {
   font-family: var(--font-neon-anton);
   font-size: clamp(1.8rem, 5vw, 3.5rem);
@@ -147,7 +145,6 @@ body {
   font-weight: 900;
   position: relative;
   z-index: 2;
-  /* Efecto de borde desgastado sutil */
   border: 2px solid #ffffff;
 }
 
@@ -158,12 +155,11 @@ body {
   margin-top: 4rem;
   width: 100%;
   max-width: 600px;
-  /* Efecto de cristal esmerilado */
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-top: 2px solid var(--neon-pink); /* Borde superior de color */
+  border-top: 2px solid var(--neon-pink);
   padding: 2.5rem 2rem;
   border-radius: 16px;
   position: relative;
@@ -197,7 +193,9 @@ body {
 }
 
 @keyframes blinkRetro {
-  to { visibility: hidden; }
+  to {
+    visibility: hidden;
+  }
 }
 
 .location-title {
@@ -257,9 +255,10 @@ body {
   cursor: pointer;
   border-radius: 4px;
   box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 1px;
+  will-change: transform;
 }
 
 .btn-secondary:hover {
@@ -284,9 +283,15 @@ body {
   margin-top: 2rem;
 }
 
-@keyframes pulseBlink {
-  0% { opacity: 0.7; }
-  100% { opacity: 1; box-shadow: 0 0 15px rgba(255, 0, 127, 0.4); }
+/* Animación de parpadeo simple (solo opacity) */
+@keyframes pulseOpacity {
+  0% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 /* ==========================================================================
@@ -294,7 +299,7 @@ body {
    ========================================================================== */
 
 .party-mode-container {
-  background: 
+  background:
     radial-gradient(circle at 50% 50%, rgba(255, 0, 127, 0.3) 0%, transparent 70%),
     radial-gradient(circle at 0% 100%, rgba(57, 255, 20, 0.2) 0%, transparent 50%),
     #06070a;
@@ -315,33 +320,43 @@ body {
   padding: 3rem 2rem;
   border-radius: 20px;
   border: 1px solid rgba(255, 0, 127, 0.5);
-  box-shadow: 
+  /* Sombra estática (no se anima) */
+  box-shadow:
     0 0 30px rgba(255, 0, 127, 0.3),
     inset 0 0 30px rgba(255, 0, 127, 0.1);
   max-width: 700px;
   width: 100%;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  /* Animación con transform, mucho más eficiente */
   animation: hologramFloat 4s ease-in-out infinite;
   position: relative;
   z-index: 2;
+  will-change: transform;
 }
 
-/* Efecto de flotación holográfica */
 @keyframes hologramFloat {
-  0% { transform: translateY(0px); box-shadow: 0 0 30px rgba(255, 0, 127, 0.3); }
-  50% { transform: translateY(-10px); box-shadow: 0 0 50px rgba(255, 0, 127, 0.5); }
-  100% { transform: translateY(0px); box-shadow: 0 0 30px rgba(255, 0, 127, 0.3); }
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 .party-title {
   font-family: var(--font-neon-orbitron);
-  font-size: clamp(3rem, 8vw, 5rem);
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
   color: #ffffff;
   margin: 0 0 1rem 0;
   text-transform: uppercase;
   letter-spacing: 2px;
-  text-shadow: 
+  text-shadow:
     0 0 10px #fff,
     0 0 20px var(--neon-pink),
     0 0 40px var(--cyan-electric);
@@ -368,7 +383,8 @@ body {
 .party-info p {
   color: #ffffff;
   font-family: var(--font-retro-mono);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
   margin: 0.8rem 0;
   text-align: left;
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
@@ -399,9 +415,10 @@ body {
   border-radius: 50px;
   text-transform: uppercase;
   box-shadow: 0 0 15px var(--neon-green), inset 0 0 15px var(--neon-green);
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 2px solid var(--neon-green);
   letter-spacing: 2px;
+  will-change: transform;
 }
 
 .party-btn:hover {
@@ -412,27 +429,102 @@ body {
 }
 
 /* ==========================================================================
+   MENSAJE FINAL (PARTY MODE)
+   ========================================================================== */
+
+.party-teaser {
+  font-family: var(--font-neon-orbitron);
+  font-size: 1.1rem;
+  color: var(--neon-green);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px dashed rgba(57, 255, 20, 0.5);
+  border-radius: 5px;
+  background: rgba(57, 255, 20, 0.05);
+  /* Animación simplificada usando solo opacity y color (más ligero) */
+  animation: pulseTeaserOptimized 2s infinite alternate;
+  will-change: opacity;
+}
+
+@keyframes pulseTeaserOptimized {
+  0% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   GALERÍA DE FOTOS (MODO FIESTA)
+   ========================================================================== */
+
+.photo-gallery-section {
+  margin-top: 2.5rem;
+  width: 100%;
+}
+
+.photo-links-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 10px;
+}
+
+.photo-link-btn {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  text-decoration: none;
+  font-family: var(--font-industrial);
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--cyan-electric);
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+  will-change: transform;
+}
+
+.photo-link-btn:hover {
+  background-color: var(--cyan-electric);
+  color: #000;
+  transform: translateY(-4px) scale(1.05);
+  box-shadow:
+    0 0 20px var(--cyan-electric),
+    0 0 40px rgba(0, 245, 255, 0.5);
+  border-color: #ffffff;
+}
+
+/* ==========================================================================
    ESTILO PARA EL ENLACE DEL PORTAFOLIO (Footer)
    ========================================================================== */
 
 .neon-footer a {
-  color: var(--cyan-electric); /* Color cian eléctrico para contrastar con el fondo */
-  text-decoration: none; /* Quitamos el subrayado por defecto */
-  font-family: var(--font-retro-mono); /* Fuente de terminal */
+  color: var(--cyan-electric);
+  text-decoration: none;
+  font-family: var(--font-retro-mono);
   font-weight: bold;
-  position: relative; /* Necesario para el efecto del subrayado */
-  padding: 0 4px; /* Un poco de aire a los lados */
-  transition: all 0.3s ease;
-  
-  /* Animación sutil de parpadeo estilo terminal antigua */
+  position: relative;
+  padding: 0 4px;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  /* Animación de parpadeo (muy ligera, solo opacity) */
   animation: terminalBlink 3s infinite steps(1, start);
 }
 
-/* El subrayado animado */
 .neon-footer a::after {
   content: '';
   position: absolute;
-  width: 0; /* Empieza invisible */
+  width: 0;
   height: 2px;
   bottom: -2px;
   left: 0;
@@ -441,22 +533,33 @@ body {
   box-shadow: 0 0 8px var(--cyan-electric);
 }
 
-/* Efecto al pasar el mouse (Hover) */
 .neon-footer a:hover {
-  color: #ffffff; /* Se vuelve blanco puro */
-  text-shadow: 0 0 10px var(--cyan-electric), 0 0 20px var(--cyan-electric); /* Brillo intenso */
-  animation: none; /* Detenemos el parpadeo para que se vea sólido y llamativo */
+  color: #ffffff;
+  text-shadow: 0 0 10px var(--cyan-electric), 0 0 20px var(--cyan-electric);
+  animation: none;
 }
 
-/* El subrayado se expande al 100% en hover */
 .neon-footer a:hover::after {
   width: 100%;
 }
 
-/* Animación de parpadeo sutil (como si la pantalla tuviera una interferencia) */
 @keyframes terminalBlink {
-  0%, 90%, 100% { opacity: 1; }
-  92% { opacity: 0.4; }
-  94% { opacity: 1; }
-  96% { opacity: 0.6; }
+
+  0%,
+  90%,
+  100% {
+    opacity: 1;
+  }
+
+  92% {
+    opacity: 0.4;
+  }
+
+  94% {
+    opacity: 1;
+  }
+
+  96% {
+    opacity: 0.6;
+  }
 }
